@@ -10,16 +10,16 @@ std::string Logfile_manager::LogFileManager(int trigger)
 
   if(trigger == 0) // reset
   {
-    command << "rm " << log_file_ << std::endl;
+    command << "rm " << log_file_path_with_name_ << std::endl;
     std::system(command.str().c_str());
-    OpenLogFile(log_file_path_,log_file_name_);
+    OpenLogFile();
     trigger = -1;
     return "reset LogFile";
   }
 
   else if (trigger == 1) // save
   {
-    OpenLogFile(log_file_path_,log_file_name_);
+    OpenLogFile();
     trigger = -1;
     return "save LogFile";
   }
@@ -28,27 +28,28 @@ std::string Logfile_manager::LogFileManager(int trigger)
   {
     command << "rm " << log_file_path_ << "/" << log_file_name_ << "*" << std::endl;
     std::system(command.str().c_str());
-    OpenLogFile(log_file_path_,log_file_name_);
+    OpenLogFile();
     trigger = -1;
-    return "remove LogFile";
+    return "remove all LogFile";
 
   }
 
   return "Non Comand";
 
-
-//  return true;
-
 }
 
-std::string Logfile_manager::OpenLogFile(std::string log_file_path, std::string log_file_name)
+std::string Logfile_manager::OpenLogFile()
 {
-  log_file_name_ = log_file_name;
-  log_file_name = log_file_name + "-"+ GetNowTime() +".csv";
-  log_file_path_ = log_file_path;
-  log_file_ = log_file_path + "/" + log_file_name;
-  log_text_.open(log_file_);
-  return log_file_;
+  std::string log_file_name = log_file_name_ + "-"+ GetNowTime() +".csv";
+  log_file_path_with_name_ = log_file_path_ + "/" + log_file_name;
+  log_file_.open(log_file_path_with_name_);
+  return log_file_path_with_name_;
+}
+
+bool Logfile_manager::CloseLogFile()
+{
+  log_file_.close();
+  return true;
 }
 
 std::string Logfile_manager::GetNowTime()
@@ -74,13 +75,8 @@ std::string Logfile_manager::GetNowTime()
 
 bool Logfile_manager::WriteLogFile(std::string text)
 {
-  log_text_ << text << std::endl;
+  log_file_ << text << std::endl;
   return true;
 }
 
-bool Logfile_manager::CloseLogFile()
-{
-  log_text_.close();
-  return true;
-}
 

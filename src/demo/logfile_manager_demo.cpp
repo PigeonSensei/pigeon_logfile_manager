@@ -32,34 +32,38 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "logfile_manager_demo_node");
   ros::NodeHandle n;
 
-  Logfile_manager logfile_manager;
-
-  char temp_path[255];
-  getcwd(temp_path, 255);
-  logfile_manager.OpenLogFile(temp_path, "DemoLogFile");
+  ROS_INFO("logfile_manager_demo_node Open");
 
   ros::Rate loop_rate(10);
 
-  std::string demo_log;
+  char temp_path[255];
+  getcwd(temp_path, 255);
 
-//  demo_log = logfile_manager.GetNowTime() + "," + "1" + "," + "2.222";
-//  logfile_manager.WriteLogFile(demo_log);
+  Logfile_manager logfile_manager(temp_path,"DemoLogFile");
+
+  logfile_manager.OpenLogFile();
+
+  std::string demo_log;
+  int Count = 0;
 
   while(ros::ok)
   {
-    demo_log = logfile_manager.GetNowTime() + "," + "1" + "," + "2.222";
+    int return_key = 0;
+    demo_log = logfile_manager.GetNowTime() + "," + std::to_string(Count) + "," + std::to_string(Count+3);
     logfile_manager.WriteLogFile(demo_log);
-    if(ReturnInputKey() == 97) std::cout << logfile_manager.LogFileManager(0) << std::endl;
-    if(ReturnInputKey() == 119) std::cout << logfile_manager.LogFileManager(1) << std::endl;
-    if(ReturnInputKey() == 101) std::cout << logfile_manager.LogFileManager(2) << std::endl;
-    ros::spinOnce();
+    return_key = ReturnInputKey();
+    Count++;
+    if(return_key == 113) std::cout << logfile_manager.LogFileManager(0) << std::endl;
+    if(return_key == 119) std::cout << logfile_manager.LogFileManager(1) << std::endl;
+    if(return_key == 101) std::cout << logfile_manager.LogFileManager(2) << std::endl;
+    if(return_key == 27) break;
     loop_rate.sleep();
-    if(ReturnInputKey() == 27) break;
+    ros::spinOnce();
   }
 
   logfile_manager.CloseLogFile();
 
+  ROS_INFO("logfile_manager_demo_node Close");
 
-  ROS_INFO("Hello world!");
   return 0;
 }
