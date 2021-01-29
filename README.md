@@ -14,7 +14,7 @@ Provides API to write log files
    - log_file_name : PigeonLogFile
    
    ### API Lists
-   - #### std::string OpenLogFile();
+   - #### std::string OpenLogFile()
    
      Open log file
      
