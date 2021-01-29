@@ -7,6 +7,12 @@ Provides API to write log files
    
    When declaring a class, you must provide the log_file_path and log_file_name.
    
+   ex ) 
+   
+   - log_file_path : /home/pigeon/log_files
+   
+   - log_file_name : PigeonLogFile
+   
    ### API Lists
    - #### std::string OpenLogFile();
    
