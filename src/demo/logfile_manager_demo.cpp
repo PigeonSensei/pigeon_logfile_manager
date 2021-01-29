@@ -46,17 +46,17 @@ int main(int argc, char **argv)
   std::string demo_log;
   int Count = 0;
 
-  while(ros::ok)
+  while(ros::ok())
   {
     int return_key = 0;
     demo_log = logfile_manager.GetNowTime() + "," + std::to_string(Count) + "," + std::to_string(Count+3);
     logfile_manager.WriteLogFile(demo_log);
     return_key = ReturnInputKey();
     Count++;
-    if(return_key == 113) std::cout << logfile_manager.LogFileManager(0) << std::endl;
-    if(return_key == 119) std::cout << logfile_manager.LogFileManager(1) << std::endl;
-    if(return_key == 101) std::cout << logfile_manager.LogFileManager(2) << std::endl;
-    if(return_key == 27) break;
+    if(return_key == 113) std::cout << logfile_manager.LogFileManager(0) << std::endl; // q
+    if(return_key == 119) std::cout << logfile_manager.LogFileManager(1) << std::endl; // w
+    if(return_key == 101) std::cout << logfile_manager.LogFileManager(2) << std::endl; // e
+    if(return_key == 27) break; // Esc
     loop_rate.sleep();
     ros::spinOnce();
   }
