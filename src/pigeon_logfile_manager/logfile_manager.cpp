@@ -40,6 +40,10 @@ std::string Logfile_manager::LogFileManager(int trigger)
 
 std::string Logfile_manager::OpenLogFile()
 {
+  if(log_file_path_.back() == '/') log_file_path_.pop_back();
+  if(log_file_name_.front() == '/') log_file_name_.erase(0,1);
+  if(log_file_name_.back() == '/') log_file_name_.pop_back();
+
   std::string log_file_name = log_file_name_ + "-"+ GetNowTime() +".csv";
   log_file_path_with_name_ = log_file_path_ + "/" + log_file_name;
   log_file_.open(log_file_path_with_name_);
