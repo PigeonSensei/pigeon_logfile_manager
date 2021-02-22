@@ -71,8 +71,13 @@ std::string Logfile_manager::GetNowTime()
 
   std::string now_time;
 
-  if(tm->tm_mon+1 <10) now_time = year + "0" + mon + day + hour + min + sec;
-  else now_time = year + mon + day + hour + min + sec;
+  if(tm->tm_mon+1 < 10) mon = "0" + mon;
+  if(tm->tm_mday < 10) day = "0" + day;
+  if(tm->tm_hour < 10) hour = "0" + hour;
+  if(tm->tm_min < 10) min = "0" + min;
+  if(tm->tm_sec < 10) sec = "0" + sec;
+
+  now_time = year + mon + day + hour + min + sec;
 
   return now_time;
 }
